@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+    <link rel="preconnect" href="https://unpkg.com" crossorigin="anonymous" />
+    <meta name="viewport" content="user-scalable=yes, width=device-width, initial-scale=1.0" />
+    <title>Rowing 2024</title>
+    <meta name="Description" content="Rowing across the atlantic in 2024">
+    <link rel="stylesheet" href="https://unpkg.com/reset-css@5.0.2/reset.css" integrity="sha384-jzVJ7CCRh6AVxikD/Ss6T+fpVAw/IJQqgXDO+Qm7TbG0rJVcaOP7Ql3DEq1CPLWJ" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://unpkg.com/pollen-css@4.6.2/pollen.css" integrity="sha384-KoYML3zwb2JJ+LRqyH4fP7jQBgbKU2CLWxYeLwF9+IFZjyL7kNb+m6LFhGnyl9lX" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" integrity="sha384-p5cy4wHtKSqjnLUNjQ+8ffCwUp0vlLS+6lg1lc3qqXax2E1EmVCMCAimU+R0MOZH" crossorigin="anonymous" />
+    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js" integrity="sha384-3WUbXI7T+/GIrWP/5MDMjhzLyHQ+0utF3PnJ7ozD7UeN1/bbZ96Hk+Vvd024VYfW" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js" integrity="sha384-1pGJzVJaUfSLK0W5tRgf0FBsukWRAMd1LxhyEaFsbQx+D+6CX6kzuEK65Ws9Uj+a" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/protomaps-themes-base@2.0.0-alpha.4/dist/index.js" integrity="sha384-BA+NtTbmFPSeHS5l7SrDxWgNolQz/9Y5rA/kPD9wsI7HyfkIFMLEczwjCJFe9q16" crossorigin="anonymous"></script>
+    <style>
+      *, ::before, ::after {
+        box-sizing: border-box;
+      }
+
+      html, body {
+        height: 100%;
+      }
+
+      body {
+        color: var(--color-grey-900);
+        background-color: var(--color-grey-100);
+      }
+
+      #map {
+        height: 100%;
+      }
+
+    </style>
+  </head>
+  <body>
+
+    <main id="map">
+    </main>
+
+    <script>
+      const protocol = new pmtiles.Protocol();
+      maplibregl.addProtocol("pmtiles", protocol.tile);
+
+      const URL = "planet-upto-z3.pmtiles";
+
+      p = new pmtiles.PMTiles(URL);
+      protocol.add(p);
+
+      var map = new maplibregl.Map({
+        container: "map",
+        antialiasing: true,
+        hash: false,
+        zoom: 3,
+        minZoom: 1,
+        maxZoom: 3,
+        center: [-25.137,2.077],
+        dragPan: false,
+        dragRotate: false,
+        interactive: false,
+        validateStyle: false,
+        style: {
+          version: 8,
+          glyphs: "fonts/{fontstack}/{range}.pbf",
+          sources: {
+            "tiles": {
+              type: "vector",
+              url: "pmtiles://" + URL,
+              attribution: "© <a href='https://openstreetmap.org'>OpenStreetMap</a>",
+              maxZoom: 3,
+            },
+          },
+          layers: protomaps_themes_base.default("tiles", "contrast"),
+        },
+      });
+    </script>
+  </body>
+</html>
