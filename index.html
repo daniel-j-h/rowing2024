@@ -12,25 +12,10 @@
     <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js" integrity="sha384-3WUbXI7T+/GIrWP/5MDMjhzLyHQ+0utF3PnJ7ozD7UeN1/bbZ96Hk+Vvd024VYfW" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js" integrity="sha384-1pGJzVJaUfSLK0W5tRgf0FBsukWRAMd1LxhyEaFsbQx+D+6CX6kzuEK65Ws9Uj+a" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/protomaps-themes-base@2.0.0-alpha.4/dist/index.js" integrity="sha384-BA+NtTbmFPSeHS5l7SrDxWgNolQz/9Y5rA/kPD9wsI7HyfkIFMLEczwjCJFe9q16" crossorigin="anonymous"></script>
-
     <style>
-      *, ::before, ::after {
-        box-sizing: border-box;
-      }
-
-      html, body {
+      html, body, #map {
         height: 100%;
       }
-
-      body {
-        color: var(--color-grey-900);
-        background-color: var(--color-grey-100);
-      }
-
-      #map {
-        height: 100%;
-      }
-
     </style>
   </head>
   <body>
@@ -106,8 +91,9 @@
           },
           paint: {
             "line-color": "#d53f8c",
-            "line-width": 14,
-            "line-blur": 7,
+            "line-width": 10,
+            "line-blur": 3,
+            "line-opacity": 0.4,
           },
         }, "physical_line_waterway_label");
 
@@ -121,7 +107,8 @@
           paint: {
             "line-color": "#ed64a6",
             "line-width": 5,
-            "line-blur": 2.5,
+            "line-blur": 3,
+            "line-opacity": 0.4,
           },
         }, "physical_line_waterway_label");
 
@@ -134,8 +121,9 @@
           },
           paint: {
             "line-color": "#ffffff",
-            "line-width": 3,
-            "line-blur": 3,
+            "line-width": 1,
+            "line-blur": 0,
+            "line-opacity": 1,
           },
         }, "physical_line_waterway_label");
 
