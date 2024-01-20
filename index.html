@@ -24,6 +24,14 @@
     </main>
 
     <script>
+      // NOTE: keep variable name stable; we sed this!
+      const metersThisYear=337559;
+
+      // The shortest Atlantic crossing is about 2900 km
+      const totalMeters = 2900000;
+
+      const progress = Math.max(0, Math.min(1, metersThisYear / totalMeters));
+
       const protocol = new pmtiles.Protocol();
       maplibregl.addProtocol("pmtiles", protocol.tile);
 
@@ -62,6 +70,9 @@
       map.on("load", function() {
         ["landuse_park", "natural_wood", "natural_scrub", "natural_sand", "landuse_beach"].forEach(function (l) { map.removeLayer(l); });
 
+        const s = [-13.2966, 8.4985];
+        const t = [-35.4642, -5.1884];
+
         map.addSource("route", {
           type: "geojson",
           data: {
@@ -71,11 +82,28 @@
                 "type": "Feature",
                 "properties": {},
                 "geometry": {
-                  "coordinates": [
-                    [-35.4642, -5.1884],
-                    [-13.2966, 8.4985]
-                  ],
+                  "coordinates": [s, t],
                   "type": "LineString"
+                }
+              }
+            ]
+          }
+        });
+
+        map.addSource("progress", {
+          type: "geojson",
+          data: {
+            "type": "FeatureCollection",
+            "features": [
+              {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "coordinates": [
+                    s[0] + progress * (t[0] - s[0]),
+                    s[1] + progress * (t[1] - s[1]),
+                  ],
+                  "type": "Point"
                 }
               }
             ]
@@ -124,6 +152,17 @@
             "line-width": 1,
             "line-blur": 0,
             "line-opacity": 1,
+          },
+        }, "physical_line_waterway_label");
+
+        map.addLayer({
+          id: "progress0",
+          type: "circle",
+          source: "progress",
+          layout: {},
+          paint: {
+            "circle-color": "#ffffff",
+            "circle-radius": 7,
           },
         }, "physical_line_waterway_label");
 
