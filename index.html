@@ -44,7 +44,7 @@
         container: "map",
         antialiasing: true,
         hash: false,
-        zoom: 1,
+        zoom: 3,
         minZoom: 1,
         maxZoom: 7,
         center: [-25.137,2.077],
@@ -97,7 +97,10 @@
             "features": [
               {
                 "type": "Feature",
-                "properties": {},
+                "properties": {
+                  "currentKm": Math.round(metersThisYear / 1000.0),
+                  "totalKm": Math.round(totalMeters / 1000.0),
+                },
                 "geometry": {
                   "coordinates": [
                     s[0] + progress * (t[0] - s[0]),
@@ -111,36 +114,6 @@
         });
 
         map.addLayer({
-          id: "route2",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#d53f8c",
-            "line-width": 10,
-            "line-blur": 3,
-            "line-opacity": 0.4,
-          },
-        }, "physical_line_waterway_label");
-
-        map.addLayer({
-          id: "route1",
-          type: "line",
-          source: "route",
-          layout: {
-            "line-cap": "round",
-          },
-          paint: {
-            "line-color": "#ed64a6",
-            "line-width": 5,
-            "line-blur": 3,
-            "line-opacity": 0.4,
-          },
-        }, "physical_line_waterway_label");
-
-        map.addLayer({
           id: "route0",
           type: "line",
           source: "route",
@@ -150,8 +123,7 @@
           paint: {
             "line-color": "#ffffff",
             "line-width": 1,
-            "line-blur": 0,
-            "line-opacity": 1,
+            "line-dasharray": [4, 4],
           },
         }, "physical_line_waterway_label");
 
@@ -162,10 +134,41 @@
           layout: {},
           paint: {
             "circle-color": "#ffffff",
-            "circle-radius": 7,
+            "circle-radius": 4.5,
           },
         }, "physical_line_waterway_label");
 
+        map.addLayer({
+          id: "progress1",
+          type: "circle",
+          source: "progress",
+          layout: {},
+          paint: {
+            "circle-color": "#6573c3",
+            "circle-radius": 3,
+          },
+        }, "physical_line_waterway_label");
+
+        map.addLayer({
+          id: "progress2",
+          type: "symbol",
+          source: "progress",
+          layout: {
+            "text-anchor": progress < 0.5 ? "right" : "left",
+            "text-offset": [0, progress < 0.5 ? -1.2 : 1.2],
+            "text-font": ["Noto Sans Medium"],
+            "text-field": "{currentKm} km",
+            "text-size": 18,
+            "text-overlap": "always",
+            "text-letter-spacing": 0.1,
+            "text-padding": 4,
+          },
+          paint: {
+            "text-color": "#6573c3",
+            "text-halo-color": "#ffffff",
+            "text-halo-width": 1,
+          },
+        }, "physical_line_waterway_label");
       });
     </script>
   </body>
