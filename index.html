@@ -13,8 +13,14 @@
     <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js" integrity="sha384-1pGJzVJaUfSLK0W5tRgf0FBsukWRAMd1LxhyEaFsbQx+D+6CX6kzuEK65Ws9Uj+a" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/protomaps-themes-base@2.0.0-alpha.4/dist/index.js" integrity="sha384-BA+NtTbmFPSeHS5l7SrDxWgNolQz/9Y5rA/kPD9wsI7HyfkIFMLEczwjCJFe9q16" crossorigin="anonymous"></script>
     <style>
-      html, body, #map {
-        height: 100%;
+      html, body {
+        height: 100vh;
+      }
+
+      #map {
+        height: 100vh;
+        opacity: 0;
+        transition: opacity 0.3s;
       }
     </style>
   </head>
@@ -169,6 +175,8 @@
             "text-halo-width": 1,
           },
         }, "physical_line_waterway_label");
+
+        document.getElementById("map").style.opacity = 1;
       });
     </script>
   </body>
