@@ -11,7 +11,6 @@
     <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" integrity="sha384-p5cy4wHtKSqjnLUNjQ+8ffCwUp0vlLS+6lg1lc3qqXax2E1EmVCMCAimU+R0MOZH" crossorigin="anonymous" />
     <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js" integrity="sha384-3WUbXI7T+/GIrWP/5MDMjhzLyHQ+0utF3PnJ7ozD7UeN1/bbZ96Hk+Vvd024VYfW" crossorigin="anonymous"></script>
     <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js" integrity="sha384-1pGJzVJaUfSLK0W5tRgf0FBsukWRAMd1LxhyEaFsbQx+D+6CX6kzuEK65Ws9Uj+a" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/protomaps-themes-base@2.0.0-alpha.4/dist/index.js" integrity="sha384-BA+NtTbmFPSeHS5l7SrDxWgNolQz/9Y5rA/kPD9wsI7HyfkIFMLEczwjCJFe9q16" crossorigin="anonymous"></script>
     <style>
       html, body {
         height: 100vh;
@@ -69,13 +68,48 @@
               maxZoom: 3,
             },
           },
-          layers: protomaps_themes_base.default("tiles", "contrast"),
+          layers: [
+            {
+              "id": "background",
+              "type": "background",
+              "paint": {
+                "background-color": "#f8fafc",
+              },
+            },
+            {
+              "id": "earth",
+              "type": "fill",
+              "source": "tiles",
+              "source-layer": "earth",
+              "paint": {
+                "fill-color": "#f8fafc",
+              },
+            },
+            {
+              "id": "water",
+              "type": "fill",
+              "source": "tiles",
+              "source-layer": "water",
+              "paint": {
+                "fill-color": "#e2e8f0",
+              },
+            },
+            {
+              "id": "boundaries",
+              "type": "line",
+              "source": "tiles",
+              "source-layer": "boundaries",
+              "filter": ["<=", "pmap:min_admin_level", 2],
+              "paint": {
+                "line-width": 1,
+                "line-color": "#e2e8f0",
+              },
+            },
+          ],
         },
       });
 
       map.on("load", function() {
-        ["landuse_park", "natural_wood", "natural_scrub", "natural_sand", "landuse_beach"].forEach(function (l) { map.removeLayer(l); });
-
         const s = [-13.2966, 8.4985];
         const t = [-35.4642, -5.1884];
 
@@ -127,11 +161,11 @@
             "line-cap": "round",
           },
           paint: {
-            "line-color": "#ffffff",
+            "line-color": "#f8fafc",
             "line-width": 1,
             "line-dasharray": [4, 4],
           },
-        }, "physical_line_waterway_label");
+        });
 
         map.addLayer({
           id: "progress0",
@@ -139,10 +173,10 @@
           source: "progress",
           layout: {},
           paint: {
-            "circle-color": "#ffffff",
+            "circle-color": "#f8fafc",
             "circle-radius": 4.5,
           },
-        }, "physical_line_waterway_label");
+        });
 
         map.addLayer({
           id: "progress1",
@@ -150,10 +184,10 @@
           source: "progress",
           layout: {},
           paint: {
-            "circle-color": "#6573c3",
+            "circle-color": "#64748b",
             "circle-radius": 3,
           },
-        }, "physical_line_waterway_label");
+        });
 
         map.addLayer({
           id: "progress2",
@@ -170,11 +204,11 @@
             "text-padding": 4,
           },
           paint: {
-            "text-color": "#6573c3",
-            "text-halo-color": "#ffffff",
+            "text-color": "#64748b",
+            "text-halo-color": "#f8fafc",
             "text-halo-width": 1,
           },
-        }, "physical_line_waterway_label");
+        });
 
         document.getElementById("map").style.opacity = 1;
       });
