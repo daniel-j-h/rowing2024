@@ -6,13 +6,13 @@
     <meta name="viewport" content="initial-scale=1, maximum-scale=1, user-scalable=no">
     <title>Rowing 2024</title>
     <meta name="Description" content="Rowing across the atlantic in 2024">
-    <link rel="stylesheet" href="https://unpkg.com/reset-css@5.0.2/reset.css" integrity="sha384-jzVJ7CCRh6AVxikD/Ss6T+fpVAw/IJQqgXDO+Qm7TbG0rJVcaOP7Ql3DEq1CPLWJ" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://unpkg.com/pollen-css@4.6.2/pollen.css" integrity="sha384-KoYML3zwb2JJ+LRqyH4fP7jQBgbKU2CLWxYeLwF9+IFZjyL7kNb+m6LFhGnyl9lX" crossorigin="anonymous" />
-    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.css" integrity="sha384-p5cy4wHtKSqjnLUNjQ+8ffCwUp0vlLS+6lg1lc3qqXax2E1EmVCMCAimU+R0MOZH" crossorigin="anonymous" />
-    <script src="https://unpkg.com/maplibre-gl@3.6.2/dist/maplibre-gl.js" integrity="sha384-3WUbXI7T+/GIrWP/5MDMjhzLyHQ+0utF3PnJ7ozD7UeN1/bbZ96Hk+Vvd024VYfW" crossorigin="anonymous"></script>
-    <script src="https://unpkg.com/pmtiles@2.11.0/dist/index.js" integrity="sha384-1pGJzVJaUfSLK0W5tRgf0FBsukWRAMd1LxhyEaFsbQx+D+6CX6kzuEK65Ws9Uj+a" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.css" integrity="sha384-m6tadjb5ohv1Fw3GJynIWn5c1scKfW7kxSXuDrhlq1gdXPn7I7UL0sSKDfCUErOb" crossorigin="anonymous" />
+    <script src="https://unpkg.com/maplibre-gl@4.1.3/dist/maplibre-gl.js" integrity="sha384-3w1F5OvxlTQbswBbpJFQNorFWnAG1Q1PXQ1vYDhq38n+mse5l7ig3gCDHBEQ3GAN" crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/pmtiles@3.0.5/dist/pmtiles.js" integrity="sha384-4sbA4B4Oqxkzs6apu8HaZcGrL3BySmt0tO/LQf6al3hkgq8ijZFxkTkvxxZZ/3PU" crossorigin="anonymous"></script>
     <style>
       html, body {
+        margin: 0;
+        padding: 0;
         height: 100vh;
       }
 
@@ -40,7 +40,7 @@
       const protocol = new pmtiles.Protocol();
       maplibregl.addProtocol("pmtiles", protocol.tile);
 
-      const URL = "planet-upto-z3.pmtiles";
+      const URL = "planet.pmtiles";
 
       p = new pmtiles.PMTiles(URL);
       protocol.add(p);
@@ -65,7 +65,8 @@
               type: "vector",
               url: "pmtiles://" + URL,
               attribution: "© <a href='https://openstreetmap.org'>OpenStreetMap</a>",
-              maxZoom: 3,
+              minzoom: 0,
+              maxzoom: 0,
             },
           },
           layers: [
